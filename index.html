@@ -34,6 +34,8 @@
 
     html, body {
       min-height: 100%;
+      overflow-x: hidden;
+      width: 100%;
       background-color: var(--cream);
       font-family: 'Outfit', sans-serif;
       color: var(--text);
@@ -140,25 +142,25 @@
 
     .tagline {
       margin-top: 10px;
-      font-size: clamp(8px, 2.7vw, 11px);
+      font-size: clamp(6.5px, calc((100vw - 48px) / 39), 11px);
       font-weight: 400;
-      letter-spacing: clamp(0.5px, 0.6vw, 3px);
+      letter-spacing: 0.3px;
       text-transform: uppercase;
       color: var(--muted);
       text-align: center;
       white-space: nowrap;
       width: 100%;
-      padding: 0 4px;
+      overflow: hidden;
       box-sizing: border-box;
     }
 
     /* ── MARQUEE ── */
     .marquee-wrap {
       width: calc(100% + 48px);
-      margin-top: 20px;
+      margin-top: 4px;
       overflow: hidden;
       position: relative;
-      padding: 10px 0;
+      padding: 6px 0;
     }
     .marquee-wrap::before,
     .marquee-wrap::after {
@@ -513,8 +515,6 @@
 
   <div class="divider fi fi-3" aria-hidden="true" style="margin: 20px 0 0;">
     <span class="divider-line"></span>
-    <span class="divider-dot"></span>
-    <span class="divider-line"></span>
   </div>
 
   <div class="marquee-wrap fi fi-4" aria-label="Mova o corpo · Acalme a mente · Eleve a consciência · Autoconhecimento · Respiração · Filosofia · Prática">
@@ -538,6 +538,10 @@
         <span class="marquee-item">Prática</span><span class="marquee-sep"></span>
       </div>
     </div>
+  </div>
+
+  <div class="divider fi fi-4" aria-hidden="true" style="margin: 0 0 0;">
+    <span class="divider-line"></span>
   </div>
 
   <section class="about-wrap fi fi-5" aria-label="Sobre a professora">
