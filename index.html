@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
+  <link rel="icon" type="image/png" href="imagens/logo2.png" />
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Movimento Yoga</title>
@@ -212,11 +213,12 @@
     .marquee-content { display: flex; align-items: center; white-space: nowrap; }
     .marquee-item {
       font-family: 'Outfit', sans-serif;
-      font-size: 15px;
-      font-weight: 700;
+      font-size: 13px;
+      font-weight: 400;
       font-style: normal;
+      text-transform: uppercase;
       color: var(--bark);
-      letter-spacing: 0.3px;
+      letter-spacing: 1.5px;
       padding: 0 6px;
     }
     .marquee-sep {
@@ -332,6 +334,11 @@
       flex-shrink: 0;
     }
     .btn-icon svg { width: 20px; height: 20px; }
+    .btn-icon img {
+      width: 22px; height: 22px;
+      object-fit: contain;
+      filter: brightness(0) invert(1);
+    }
 
     .btn-text { flex: 1; text-align: center; }
     .btn-label {
@@ -435,6 +442,28 @@
       padding: 24px;
     }
     .popup-overlay.active { display: flex; }
+
+    @keyframes popupIn {
+      from { opacity: 0; transform: scale(0.94); }
+      to   { opacity: 1; transform: scale(1); }
+    }
+    @keyframes popupOut {
+      from { opacity: 1; transform: scale(1); }
+      to   { opacity: 0; transform: scale(0.94); }
+    }
+    @keyframes overlayOut {
+      from { opacity: 1; }
+      to   { opacity: 0; }
+    }
+    .popup-box { animation: popupIn 0.35s ease; }
+    .popup-overlay.closing { animation: overlayOut 0.3s ease forwards; }
+    .popup-overlay.closing .popup-box { animation: popupOut 0.3s ease forwards; }
+
+    @keyframes photoIn {
+      from { opacity: 0; transform: scale(1.04); }
+      to   { opacity: 1; transform: scale(1); }
+    }
+    .slider-slide img.photo-anim { animation: photoIn 0.5s ease; }
 
     .popup-box {
       background: var(--cream);
@@ -613,14 +642,7 @@
 
     <button id="btnAbrirGaleria" class="btn btn-espaco" aria-label="Conheça nosso espaço">
       <span class="btn-icon">
-        <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-          <circle cx="12" cy="5.2" r="1.8"/>
-          <path d="M12 8.3v2.3"/>
-          <path d="M8.6 17.5c-.4-3.1 1.3-6 3.4-6s3.8 2.9 3.4 6"/>
-          <path d="M8.6 17.5h6.8"/>
-          <path d="M7.3 19.6c1.2-1.1 2-1.9 2-3"/>
-          <path d="M16.7 19.6c-1.2-1.1-2-1.9-2-3"/>
-        </svg>
+        <img src="imagens/logo2.png" alt="" aria-hidden="true" />
       </span>
       <span class="btn-text">
         <span class="btn-label" style="margin-bottom: 0;">Veja aqui nosso estúdio</span>
@@ -721,13 +743,27 @@
     dotsWrap.querySelectorAll('.slider-dot').forEach(function (d, i) {
       d.classList.toggle('active', i === current);
     });
+    const slides = track.querySelectorAll('.slider-slide img');
+    slides.forEach(function (img, i) {
+      img.classList.remove('photo-anim');
+      if (i === current) {
+        void img.offsetWidth;
+        img.classList.add('photo-anim');
+      }
+    });
   }
 
   function sliderMove(dir) { sliderGoTo(current + dir); }
 
   /* ── Popup open/close ── */
-  function openPopup()  { popup.classList.add('active');    popup.focus(); }
-  function closePopup() { popup.classList.remove('active'); }
+  function openPopup()  { popup.classList.add('active'); popup.focus(); sliderGoTo(current); }
+  function closePopup() {
+    popup.classList.add('closing');
+    setTimeout(function () {
+      popup.classList.remove('active');
+      popup.classList.remove('closing');
+    }, 300);
+  }
 
   document.getElementById('btnAbrirGaleria').addEventListener('click', openPopup);
   document.getElementById('popupClose').addEventListener('click', closePopup);
