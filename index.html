@@ -84,7 +84,37 @@
     }
 
     /* ── AVATAR ── */
-    .avatar-wrap { margin-bottom: 24px; }
+    /* ── HERO VIDEO ── */
+    .hero-video-wrap {
+      width: calc(100% + 48px);
+      margin: -48px -24px 24px;
+      overflow: hidden;
+      border-radius: 0 0 28px 28px;
+      line-height: 0;
+      position: relative;
+      z-index: 0;
+    }
+    .hero-video-wrap video {
+      width: 100%;
+      height: 220px;
+      object-fit: cover;
+      display: block;
+    }
+    .hero-video-wrap::after {
+      content: '';
+      position: absolute;
+      left: 0; right: 0; bottom: 0;
+      height: 110px;
+      background: linear-gradient(to top, var(--cream) 0%, rgba(255,255,255,0) 100%);
+      pointer-events: none;
+    }
+
+    .avatar-wrap {
+      margin-top: -66px;
+      margin-bottom: 24px;
+      position: relative;
+      z-index: 1;
+    }
 
     .avatar-ring {
       width: 132px;
@@ -483,6 +513,10 @@
 </head>
 <body>
 <main class="page">
+
+  <div class="hero-video-wrap fi fi-1">
+    <video src="videos/hero.mp4" autoplay muted loop playsinline></video>
+  </div>
 
   <div class="avatar-wrap fi fi-1">
     <div class="avatar-ring">
